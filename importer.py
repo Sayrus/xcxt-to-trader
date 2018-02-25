@@ -51,11 +51,9 @@ def import_row(row, cursor):
         while answer != "s" and answer != "d" and answer != "b":
             answer = input("Enter transaction type (s=sell, b=buy, d=drop): ")
         if answer == "s":
-            row[4] = "sell"
-            import_row(row, cursor)
+            import_row((row[0], row[1], row[2], row[3], "sell", row[5], row[6]), cursor)
         if answer == "b":
-            row[4] = "buy"
-            import_row(row, cursor)
+            import_row((row[0], row[1], row[2], row[3], "buy", row[5], row[6]), cursor)
     else:
         rating = get_xf_andy_rating(row[3])
         if row[4] == "sell":
