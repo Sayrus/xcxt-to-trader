@@ -40,13 +40,14 @@ def get_db_conns(args):
 args = get_args()
 sdb, ddb = get_db_conns(args)
 
-sql = "SELECT
-       `fb_id`, `foruserid`, `fromuserid`, `amount`,
-       `type`, `review`, `dateline`
+sql = "SELECT \
+       `fb_id`, `foruserid`, `fromuserid`, `amount`, \
+       `type`, `review`, `dateline` \
        FROM xc_trade_feedback"
 
-sql_insert = "INSERT INTO xf_andy_trader(fb_id, timestamp, rating, seller_id,
-                                         buyer_id, seller_comment, buyer_comment)
+sql_insert = "INSERT INTO xf_andy_trader(fb_id, timestamp, rating, seller_id, \
+                                         buyer_id, seller_comment, \
+                                         buyer_comment) \
               VALUES (%s, %s, %s, %s, %s, %s, %s)"
 
 try:
