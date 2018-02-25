@@ -46,7 +46,7 @@ def get_xf_andy_rating(rating):
 
 def import_row(row, cursor):
     if row[4] == "trade":
-        print ("-- Trade require manual handling")
+        print ("-- Trade require manual handling, user review is: ", row[5])
         answer = ""
         while answer != "s" or answer != "d" or answer != "b":
             answer = input("Enter transaction type (s=sell, b=buy, d=drop): ")
