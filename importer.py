@@ -48,7 +48,7 @@ def import_row(row, cursor):
     if row[4] == "trade":
         print ("-- Trade require manual handling, user review is: ", row[5])
         answer = ""
-        while answer != "s" or answer != "d" or answer != "b":
+        while answer != "s" and answer != "d" and answer != "b":
             answer = input("Enter transaction type (s=sell, b=buy, d=drop): ")
         if answer == "s":
             row[4] = "sell"
