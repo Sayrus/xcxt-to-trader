@@ -58,7 +58,7 @@ def import_row(row, cursor):
             import_row(row, cursor)
     else:
         rating = get_xf_andy_rating(row[3])
-        if (row[4] == "sell")
+        if row[4] == "sell":
             cursor.execute(sql_insert,(row[0], row[6], rating, row[2], row[1], row[5], "",))
         else:
             cursor.execute(sql_insert, (row[0], row[6], rating, row[1], row[2], "", row[5],))
