@@ -51,6 +51,7 @@ sql_insert = "INSERT INTO xf_andy_trader(fb_id, timestamp, rating, seller_id, \
               VALUES (%s, %s, %s, %s, %s, %s, %s)"
 
 try:
+    cursor = sdb.cursor()
     cursor.execute(sql, ())
     for row in cursor:
         print(row)
