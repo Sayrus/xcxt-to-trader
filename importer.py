@@ -37,8 +37,34 @@ def get_db_conns(args):
                                   password=password, db=args.dest)
     return sdb, ddb
 
-args = get_args()
-sdb, ddb = get_db_conns(args)
+def get_xf_andy_rating(rating):
+    if rating == -1:
+        return 2
+    elif rating == 0:
+        return 1
+    return 0
+
+def import_row(row, cursor):
+    if row[4] == "trade":
+        print ("-- Trade require manual handling")
+        answer = ""
+        while answer != "s" or answer != "d" or answer != "b":
+            answer = input("Enter transaction type (s=sell, b=buy, d=drop): ")
+        if answer == "s":
+            row[4] = "sell"
+            import_row(row, cursor)
+        if answer == "b":
+            row[4] = "buy"
+            import_row(row, cursor)
+    else:
+        rating = get_xf_andy_rating(row[3])
+        if (row[4] == "sell")
+            cursor.execute(sql_insert,(row[0], row[6], rating, row[2], row[1], row[5], "",))
+        else:
+            cursor.execute(sql_insert, (row[0], row[6], rating, row[1], row[2], "", row[5],))
+
+args        = get_args()
+sdb, ddb    = get_db_conns(args)
 
 sql = "SELECT \
        `fb_id`, `foruserid`, `fromuserid`, `amount`, \
@@ -50,13 +76,19 @@ sql_insert = "INSERT INTO xf_andy_trader(fb_id, timestamp, rating, seller_id, \
                                          buyer_comment) \
               VALUES (%s, %s, %s, %s, %s, %s, %s)"
 
+sql_alter = "ALTER TABLE xf_andy_trader AUTO_INCREMENT = %s"
+
 try:
-    cursor = sdb.cursor()
+    cursor          = sdb.cursor()
+    insert_cursor   = ddb.cursor()
+    auto_increment  = 1
     cursor.execute(sql, ())
     for row in cursor:
-        print(row)
+        print ("Importing transaction", row[0])
+        auto_increment = row[0]
+        import_row(row, insert_cursor)
 
-    result = cursor.fetchall()
+    insert_cursor.execute(sql_alter, (auto_increment + 1,))
 finally:
     sdb.close()
     ddb.close()
