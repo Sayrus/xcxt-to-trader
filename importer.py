@@ -71,7 +71,7 @@ sql = "SELECT \
        `type`, `review`, `dateline` \
        FROM xc_trade_feedback ORDER BY fb_id ASC"
 
-sql_insert = "INSERT INTO xf_andy_trader(fb_id, timestamp, rating, seller_id, \
+sql_insert = "INSERT INTO xf_andy_trader(trader_id, timestamp, rating, seller_id, \
                                          buyer_id, seller_comment, \
                                          buyer_comment) \
               VALUES (%s, %s, %s, %s, %s, %s, %s)"
